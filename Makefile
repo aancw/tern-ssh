@@ -1,5 +1,5 @@
 BIN   := tern-ssh
-PLUGIN := $(CURDIR)/plugin
+PLUGIN := $(CURDIR)
 PREFIX ?= $(HOME)/.local
 
 .PHONY: build install test vet fmt plugin-link plugin-install plugin-reload check
@@ -27,7 +27,7 @@ plugin-link:
 	tern plugin reload
 
 plugin-install:
-	tern plugin install $(PLUGIN)
+	tern plugin install $(PLUGIN) --force
 	tern plugin reload
 
 plugin-reload:

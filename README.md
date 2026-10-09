@@ -33,18 +33,43 @@ The details card shows on `i`; the list is what opens by default.
 ## Install
 
 ```sh
-# the program, on PATH as tern-ssh
-go install github.com/aancw/tern-ssh@latest      # or: make install
+# the program, on PATH as tern-ssh: the plugin opens a pane running it
+go install github.com/aancw/tern-ssh@latest          # or: make install
 
-# the Tern plugin, which adds the palette row that starts it
-tern plugin install /path/to/tern-ssh/plugin           # or: make plugin-link
+# the Tern plugin: this repository is the package (plugin.toml at its root)
+tern plugin install github.com/aancw/tern-ssh        # or, from a checkout:
+tern plugin install .                                # or: make plugin-install
+tern plugin reload
 ```
 
-The palette then has **SSH hosts** (a new tab) and **SSH hosts split** (a split
-of the focused pane, bound to `cmd+shift+h`), because a plugin command cannot
-see which chord ran it, so each placement is its own row. Nothing else is added: the manager
-is an ordinary Tern pane, so it also runs from a shell as `tern-ssh`, and from
-`tern split`, `EDITOR`-style wrappers, or a keybind of your own.
+`tern plugin list` should show `ternssh … window ready`. A plugin listed as
+`disabled` is named in `plugins_disabled` in Tern's `settings.json`; remove it
+there or toggle it in Preferences → Plugins.
+
+## Palette rows and chords
+
+Two rows, in the **SSH** palette group, one per placement, because a plugin
+command cannot see which chord ran it, so the placement cannot be a modifier of
+one row:
+
+| Row | Action id | What it does | Default chord |
+| --- | --- | --- | --- |
+| SSH hosts | `plugin.ternssh.open` | opens the manager in a new tab | none |
+| SSH hosts split | `plugin.ternssh.split` | opens it in a split of the focused pane | `cmd+shift+h` |
+
+One chord runs one action, so only `split` carries a default. Bind what you use
+in `settings.json`; a chord Tern's own keymap already takes is dropped with a
+`plugin bind left out` warning in the log:
+
+```json
+{ "keybinds": {
+	"cmd+shift+h": "plugin.ternssh.split",
+	"cmd+alt+shift+t": "plugin.ternssh.open"
+} }
+```
+
+A clicked `ssh://user@host:port` link opens a session for that host in a split
+of the pane it was clicked in.
 
 ## Keys
 
@@ -129,14 +154,15 @@ Blocks the manager writes carry a `# tern-ssh` marker above them.
 | `main.go` | the command line: the manager, and `list`, `add`, `edit`, `remove`, `connect` |
 | `internal/sshconf` | reading, resolving and editing the ssh config |
 | `internal/app` | the Tern pane: state, keys, views, plain-text fallback |
-| `plugin` | the Tern plugin package (`plugin.toml`, `window.luau`) |
+| `plugin.toml`, `window.luau` | the Tern plugin package; it sits at the root, so the repository is the package |
 
 ## Development
 
 ```sh
-make build          # bin/tern-ssh
-make test           # the sshconf tests
-make plugin-link    # use the plugin where it is, then: tern plugin reload
+make build           # bin/tern-ssh
+make test            # the sshconf tests
+make plugin-link     # use this checkout as the plugin, then: tern plugin reload
+make plugin-install  # install a copy of it (--force to replace one)
 ```
 
 [LICENSE](LICENSE): MIT.
