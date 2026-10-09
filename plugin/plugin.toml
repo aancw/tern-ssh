@@ -1,0 +1,7 @@
+schema = 1
+id = "ternssh"
+name = "SSH Hosts"
+version = "0.1.0"
+description = "Manage the hosts of your ssh config — list, connect, add, edit, remove — in a native Tern pane"
+icon = "server"
+window = "window.luau"
