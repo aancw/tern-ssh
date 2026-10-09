@@ -9,24 +9,7 @@ elements drawn through the Tern Surface Protocol (with the
 [Go SDK](https://github.com/stencil-hq/tern-sdk/tree/main/go/tern)); in any
 other terminal the same program prints the hosts as plain text.
 
-```
-SSH hosts  3 hosts          added deploy
-/Users/you/.ssh/config
-press / to filter
-  web      deploy@10.0.0.4:22      ~/.ssh/id_ed25519   config
-  edge     root@edge.example.com:2222                  tern-ssh
-  build    ci@10.0.0.9:2200                            config
-
-  edge  ssh edge
-  destination  root@edge.example.com:2222
-  user         root
-  port         2222
-  identity     -
-  jump         -
-  source       tern-ssh
-
-enter connect   a add   e edit   d delete   i info   / filter   r reload   q quit
-```
+![Tern SSH App](docs/screenshot.png)
 
 The details card shows on `i`; the list is what opens by default.
 
