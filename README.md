@@ -33,12 +33,22 @@ The details card shows on `i`; the list is what opens by default.
 ## Install
 
 ```sh
-# the program, on PATH as tern-ssh: the plugin opens a pane running it
-go install github.com/aancw/tern-ssh@latest          # or: make install
+tern plugin install github.com/aancw/tern-ssh
+```
 
-# the Tern plugin: this repository is the package (plugin.toml at its root)
-tern plugin install github.com/aancw/tern-ssh        # or, from a checkout:
-tern plugin install .                                # or: make plugin-install
+If you want to clone the repo or manually install using go:
+```sh
+
+# clone the repo
+git clone github.com/aancw/tern-ssh
+make build           # bin/tern-ssh
+make plugin-link     # use this checkout as the plugin, then: tern plugin reload
+make plugin-install  # install a copy of it (--force to replace one)
+
+# install via go install
+go install github.com/aancw/tern-ssh@latest          
+
+# reload the tern plugin                          
 tern plugin reload
 ```
 
